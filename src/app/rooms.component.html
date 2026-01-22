@@ -1,0 +1,28 @@
+<h2>Available Rooms</h2>
+
+<table border="1" cellpadding="10">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Price</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let room of rooms">
+      <td>{{ room.id }}</td>
+      <td>{{ room.type }}</td>
+      <td>₹{{ room.price }}</td>
+      <td>
+        <span *ngIf="room.available; else notAvailable">
+          ✅ Available
+        </span>
+        <ng-template #notAvailable>
+          ❌ Booked
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>

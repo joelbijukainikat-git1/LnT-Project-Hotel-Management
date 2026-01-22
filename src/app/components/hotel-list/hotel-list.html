@@ -1,0 +1,48 @@
+<div class="hotels-container">
+  <div class="header">
+    <h2>Available Hotels</h2>
+    <p class="subtitle">Find and book your perfect stay</p>
+  </div>
+
+  <div class="filter-section">
+    <label for="location-select">Filter by Location:</label>
+    <select id="location-select" [(ngModel)]="selectedLocation">
+      <option value="">All Locations</option>
+      <option>Bangalore</option>
+      <option>Chennai</option>
+      <option>Goa</option>
+    </select>
+  </div>
+
+  <div *ngIf="filteredHotels.length === 0" class="empty-state">
+    <p>No hotels found for the selected location.</p>
+  </div>
+
+  <div class="hotels-grid">
+    <div *ngFor="let hotel of filteredHotels"
+         class="hotel-card"
+         [ngClass]="{ 'unavailable': !hotel.available }">
+      
+      <div class="hotel-header">
+        <h3>{{ hotel.name }}</h3>
+        <span class="badge" [ngClass]="{ 'available': hotel.available, 'unavailable-badge': !hotel.available }">
+          {{ hotel.available ? 'Available' : 'Unavailable' }}
+        </span>
+      </div>
+
+      <div class="hotel-details">
+        <p class="location">📍 {{ hotel.location }}</p>
+        <p class="rating">⭐ {{ hotel.rating }} / 5</p>
+      </div>
+
+      <p class="price">₹{{ hotel.price }} <span class="per-night">/ night</span></p>
+
+      <button
+        class="btn-book"
+        [disabled]="!hotel.available"
+        [routerLink]="['/book']">
+        {{ hotel.available ? 'Book Now' : 'Not Available' }}
+      </button>
+    </div>
+  </div>
+</div>

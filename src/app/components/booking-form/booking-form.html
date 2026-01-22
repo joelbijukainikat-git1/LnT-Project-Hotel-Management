@@ -1,0 +1,55 @@
+<div class="booking-container">
+  <div class="booking-card">
+    <div class="booking-header">
+      <h2>Complete Your Booking</h2>
+      <p class="booking-subtitle">Secure your room reservation</p>
+    </div>
+
+    <form class="booking-form">
+      <div class="form-group">
+        <label for="hotel-name">Hotel Name</label>
+        <input type="text" id="hotel-name" placeholder="Grand Palace" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="room-type">Room Type</label>
+        <input type="text" id="room-type" placeholder="Deluxe" disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="text" id="price" placeholder="₹3000" disabled>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="check-in">Check-in Date</label>
+          <input type="date" id="check-in" required>
+        </div>
+        <div class="form-group">
+          <label for="check-out">Check-out Date</label>
+          <input type="date" id="check-out" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="guests">Number of Guests</label>
+        <select id="guests" required>
+          <option value="">Select guests</option>
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4+ Guests</option>
+        </select>
+      </div>
+
+      <div class="booking-summary">
+        <p><strong>Total:</strong> <span class="total-price">₹3000</span></p>
+      </div>
+
+      <button type="button" class="btn-confirm" (click)="bookRoom()">
+        Confirm Booking
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>My Bookings</h2>
+    <p class="dashboard-subtitle">View and manage your reservations</p>
+  </div>
+
+  <div *ngIf="bookings.length === 0" class="empty-state">
+    <div class="empty-icon">🛏️</div>
+    <h3>No Bookings Yet</h3>
+    <p>You haven't made any bookings. <a routerLink="/hotels">Browse hotels</a> to get started!</p>
+  </div>
+
+  <div *ngIf="bookings.length > 0" class="bookings-list">
+    <div *ngFor="let booking of bookings; let i = index" class="booking-item">
+      <div class="booking-number">Booking #{{ i + 1 }}</div>
+      <div class="booking-content">
+        <div class="booking-main">
+          <h3>{{ booking.hotelName }}</h3>
+          <p class="room-type">{{ booking.roomType }} Room</p>
+        </div>
+        <div class="booking-price">
+          <span class="label">Amount Paid</span>
+          <p class="price">₹{{ booking.amount }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

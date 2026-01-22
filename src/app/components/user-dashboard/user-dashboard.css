@@ -1,0 +1,110 @@
+.dashboard-container {
+  max-width: 600px;
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+}
+
+.dashboard-header h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.dashboard-subtitle {
+  color: #666;
+  font-size: 14px;
+}
+
+.empty-state {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.empty-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  color: #666;
+  margin: 0;
+}
+
+.empty-state a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.empty-state a:hover {
+  text-decoration: underline;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.booking-item:hover {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.booking-number {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.booking-content {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-main h3 {
+  margin: 0 0 5px 0;
+}
+
+.room-type {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.booking-price {
+  text-align: right;
+}
+
+.booking-price .label {
+  color: #666;
+  font-size: 12px;
+}
+
+.booking-price .price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #27ae60;
+  margin: 0;
+}
