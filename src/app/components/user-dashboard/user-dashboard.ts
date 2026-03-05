@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { BookingService } from '../../services/booking.service';
+import { BookingService, Booking } from '../../services/booking.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -12,11 +12,13 @@ import { BookingService } from '../../services/booking.service';
 })
 export class UserDashboardComponent implements OnInit {
 
-  bookings: any[] = [];
+  bookings: Booking[] = [];
 
   constructor(private bookingService: BookingService) {}
 
   ngOnInit() {
-    this.bookings = this.bookingService.getBookings();
+    this.bookingService.getBookings().subscribe(bookings => {
+      this.bookings = bookings;
+    });
   }
 }

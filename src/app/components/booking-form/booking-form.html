@@ -5,51 +5,69 @@
       <p class="booking-subtitle">Secure your room reservation</p>
     </div>
 
-    <form class="booking-form">
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <form [formGroup]="bookingForm" class="booking-form">
       <div class="form-group">
         <label for="hotel-name">Hotel Name</label>
-        <input type="text" id="hotel-name" placeholder="Grand Palace" disabled>
+        <input type="text" id="hotel-name" formControlName="hotelName" [disabled]="true">
       </div>
 
       <div class="form-group">
         <label for="room-type">Room Type</label>
-        <input type="text" id="room-type" placeholder="Deluxe" disabled>
+        <select id="room-type" formControlName="roomType">
+          <option *ngFor="let roomType of roomTypes" [value]="roomType">{{ roomType }}</option>
+        </select>
       </div>
 
       <div class="form-group">
-        <label for="price">Price</label>
-        <input type="text" id="price" placeholder="₹3000" disabled>
+        <label for="price">Total Price</label>
+        <input type="text" id="price" [value]="totalPrice | currency: 'INR': '₹': '1.0-0'" [disabled]="true">
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="check-in">Check-in Date</label>
-          <input type="date" id="check-in" required>
+          <input type="date" id="check-in" formControlName="checkInDate">
+          <span class="error-text" *ngIf="bookingForm.get('checkInDate')?.hasError('required') && bookingForm.get('checkInDate')?.touched">
+            Check-in date is required
+          </span>
         </div>
         <div class="form-group">
           <label for="check-out">Check-out Date</label>
-          <input type="date" id="check-out" required>
+          <input type="date" id="check-out" formControlName="checkOutDate">
+          <span class="error-text" *ngIf="bookingForm.get('checkOutDate')?.hasError('required') && bookingForm.get('checkOutDate')?.touched">
+            Check-out date is required
+          </span>
         </div>
       </div>
 
       <div class="form-group">
         <label for="guests">Number of Guests</label>
-        <select id="guests" required>
-          <option value="">Select guests</option>
-          <option value="1">1 Guest</option>
-          <option value="2">2 Guests</option>
-          <option value="3">3 Guests</option>
-          <option value="4">4+ Guests</option>
+        <select id="guests" formControlName="guests">
+          <option *ngFor="let option of guestOptions" [value]="option">{{ option }} {{ option === 1 ? 'Guest' : 'Guests' }}</option>
         </select>
+        <span class="error-text" *ngIf="bookingForm.get('guests')?.hasError('required') && bookingForm.get('guests')?.touched">
+          Please select number of guests
+        </span>
+        <span class="error-text" *ngIf="(bookingForm.get('guests')?.hasError('min') || bookingForm.get('guests')?.hasError('max')) && bookingForm.get('guests')?.touched">
+          Guests must be between 1 and 4
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="special-requests">Special Requests</label>
+        <textarea id="special-requests" formControlName="specialRequests" rows="3" placeholder="e.g., High floor, late check-in, etc."></textarea>
       </div>
 
       <div class="booking-summary">
-        <p><strong>Total:</strong> <span class="total-price">₹3000</span></p>
+        <p><strong>Total for your stay:</strong> <span class="total-price">{{ totalPrice | currency: 'INR': '₹': '1.0-0' }}</span></p>
       </div>
 
-      <button type="button" class="btn-confirm" (click)="bookRoom()">
-        Confirm Booking
-      </button>
-    </form>
-  </div>
-</div>
+      <button 
+        type="button" 
+        class="btn-confirm" 
+        (click)="onBookRoom()"
+        [disabled]="isLoading">
+        {{ isLoading ? 'Processing...' : 'Confirm Booking' }}

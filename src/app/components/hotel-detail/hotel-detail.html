@@ -1,1 +1,59 @@
-<p>hotel-detail works!</p>
+<div class="hotel-detail-container" *ngIf="hotel">
+  <div class="hotel-info">
+    <h2>{{ hotel.name }}</h2>
+    <p><strong>Location:</strong> {{ hotel.location }}</p>
+    <p><strong>Rating:</strong> ⭐ {{ hotel.rating }} / 5</p>
+    <p><strong>Description:</strong> {{ hotel.description }}</p>
+    <p><strong>Base Price:</strong> ₹{{ hotel.price }} / night</p>
+    <p [ngClass]="{ 'available': hotel.available, 'unavailable': !hotel.available }">
+      <strong>Status:</strong> {{ hotel.available ? 'Available' : 'Unavailable' }}
+    </p>
+  </div>
+
+  <div class="room-categories">
+    <h3>Room Categories</h3>
+    <div class="category-filter">
+      <button 
+        [class.active]="selectedCategory === 'all'" 
+        (click)="selectedCategory = 'all'">
+        All Rooms
+      </button>
+      <button 
+        [class.active]="selectedCategory === 'standard'" 
+        (click)="selectedCategory = 'standard'">
+        Standard
+      </button>
+      <button 
+        [class.active]="selectedCategory === 'deluxe'" 
+        (click)="selectedCategory = 'deluxe'">
+        Deluxe
+      </button>
+      <button 
+        [class.active]="selectedCategory === 'suite'" 
+        (click)="selectedCategory = 'suite'">
+        Suite
+      </button>
+    </div>
+
+    <div class="rooms-list">
+      <div *ngFor="let room of filteredRooms" class="room-card">
+        <h4>{{ room.type }} Room</h4>
+        <p><strong>Price:</strong> ₹{{ room.price }} / night</p>
+        <p><strong>Availability:</strong> {{ room.available ? 'Available' : 'Not Available' }}</p>
+        <button 
+          [disabled]="!room.available && !hotel.available"
+          [routerLink]="['/book']">
+          Book This Room
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a routerLink="/hotels">← Back to Hotels</a>
+  </div>
+</div>
+
+<div class="error-message" *ngIf="!hotel">
+  <p>Hotel not found. <a routerLink="/hotels">Back to Hotels</a></p>
+</div>

@@ -1,5 +1,11 @@
 main {
-  padding: 20px;
-  max-width: 1000px;
+  padding: 40px 20px;
+  max-width: 1400px;
   margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
 }

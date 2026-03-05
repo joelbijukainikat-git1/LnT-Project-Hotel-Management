@@ -1,1 +1,48 @@
-<p>admin-panel works!</p>
+<div class="admin-container">
+  <div class="admin-header">
+    <h1>Admin Panel</h1>
+    <p>Welcome, {{ adminName }}!</p>
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <h3>Total Bookings</h3>
+      <p class="stat-number">{{ totalBookings }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Hotels</h3>
+      <p class="stat-number">{{ totalHotels }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <p class="stat-number">{{ totalUsers }}</p>
+    </div>
+  </div>
+
+  <div class="admin-sections">
+    <section class="admin-section">
+      <h2>Manage Hotels</h2>
+      <p>Add, edit, or delete hotel listings and room details.</p>
+      <button>Manage Hotels</button>
+    </section>
+
+    <section class="admin-section">
+      <h2>View Bookings</h2>
+      <p>Monitor all user bookings and reservations.</p>
+      <button>View Bookings</button>
+    </section>
+
+    <section class="admin-section">
+      <h2>Manage Users</h2>
+      <p>Manage user accounts and permissions.</p>
+      <button>Manage Users</button>
+    </section>
+
+    <section class="admin-section">
+      <h2>Reports</h2>
+      <p>Generate and view system reports and analytics.</p>
+      <button>View Reports</button>
+    </section>
+  </div>
+</div>

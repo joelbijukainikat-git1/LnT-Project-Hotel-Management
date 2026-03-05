@@ -1,27 +1,57 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Hotel } from '../../models/hotel.model';
+import { HotelService } from '../../services/hotel.service';
+import { HighlightBookedDirective } from '../../directives/highlight-booked.directive';
+import { HighlightDiscountDirective } from '../../directives/highlight-discount.directive';
 
 @Component({
   selector: 'app-hotel-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    HighlightBookedDirective,
+    HighlightDiscountDirective
+  ],
   templateUrl: './hotel-list.html',
   styleUrls: ['./hotel-list.css']
 })
-export class HotelListComponent {
-
+export class HotelListComponent implements OnInit {
+  hotels: Hotel[] = [];
   selectedLocation = '';
+  selectedMaxPrice = 6000;
+  selectedMinRating = 0;
+  loading = false;
 
-  hotels = [
-    { id: 1, name: 'Grand Palace', location: 'Bangalore', price: 3000, rating: 4.5, available: true },
-    { id: 2, name: 'City Inn', location: 'Chennai', price: 2000, rating: 4.0, available: false },
-    { id: 3, name: 'Sea View', location: 'Goa', price: 5000, rating: 4.8, available: true }
-  ];
+  constructor(private hotelService: HotelService) {}
 
-  get filteredHotels() {
-    if (!this.selectedLocation) return this.hotels;
-    return this.hotels.filter(h => h.location === this.selectedLocation);
+  ngOnInit() {
+    this.loadHotels();
+  }
+
+  loadHotels() {
+    this.loading = true;
+    this.hotelService.getAllHotels().subscribe((hotels) => {
+      this.hotels = hotels;
+      this.loading = false;
+    });
+  }
+
+  get filteredHotels(): Hotel[] {
+    let result = this.hotels;
+    if (this.selectedLocation) {
+      result = result.filter(h => h.location.toLowerCase().includes(this.selectedLocation.toLowerCase()));
+    }
+    if (this.selectedMaxPrice) {
+      result = result.filter(h => h.pricePerNight <= this.selectedMaxPrice);
+    }
+    if (this.selectedMinRating) {
+      result = result.filter(h => h.rating >= this.selectedMinRating);
+    }
+    return result;
   }
 }

@@ -1,28 +1,34 @@
-<h2>Available Rooms</h2>
+<div class="rooms-section">
+  <div class="rooms-header">
+    <h2>Available Rooms</h2>
+  </div>
 
-<table border="1" cellpadding="10">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Type</th>
-      <th>Price</th>
-      <th>Status</th>
-    </tr>
-  </thead>
+  <div class="table-container">
+    <table class="rooms-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Room Type</th>
+          <th>Price</th>
+          <th>Status</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <tr *ngFor="let room of rooms">
-      <td>{{ room.id }}</td>
-      <td>{{ room.type }}</td>
-      <td>₹{{ room.price }}</td>
-      <td>
-        <span *ngIf="room.available; else notAvailable">
-          ✅ Available
-        </span>
-        <ng-template #notAvailable>
-          ❌ Booked
-        </ng-template>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      <tbody>
+        <tr *ngFor="let room of rooms" [ngClass]="{'booked': !room.available}">
+          <td class="room-id"><span class="id-badge">{{ room.id }}</span></td>
+          <td class="room-type">{{ room.type }}</td>
+          <td class="room-price">₹{{ room.price }}</td>
+          <td class="room-status">
+            <span *ngIf="room.available; else notAvailable" class="status-badge available">
+              ✅ Available
+            </span>
+            <ng-template #notAvailable>
+              <span class="status-badge booked">❌ Booked</span>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

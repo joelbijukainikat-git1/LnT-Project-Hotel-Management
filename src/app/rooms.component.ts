@@ -6,7 +6,8 @@ import { Room } from './models/room.model';
   selector: 'app-rooms',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './rooms.component.html'
+  templateUrl: './rooms.component.html',
+  styleUrls: ['./rooms.component.css']
 })
 
 export class RoomsComponent {

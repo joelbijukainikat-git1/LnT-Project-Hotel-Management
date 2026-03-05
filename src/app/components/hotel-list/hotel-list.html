@@ -5,44 +5,59 @@
   </div>
 
   <div class="filter-section">
-    <label for="location-select">Filter by Location:</label>
-    <select id="location-select" [(ngModel)]="selectedLocation">
-      <option value="">All Locations</option>
-      <option>Bangalore</option>
-      <option>Chennai</option>
-      <option>Goa</option>
-    </select>
+    <div class="filter-group">
+      <label for="location-select">📍 Filter by Location:</label>
+      <input id="location-select" type="text" [(ngModel)]="selectedLocation" placeholder="Enter location...">
+    </div>
+
+    <div class="filter-group">
+      <label for="price-select">💰 Max Price:</label>
+      <input id="price-select" type="range" [(ngModel)]="selectedMaxPrice" min="1000" max="6000" step="100">
+      <span>₹{{ selectedMaxPrice }}</span>
+    </div>
+
+    <div class="filter-group">
+      <label for="rating-select">⭐ Min Rating:</label>
+      <select id="rating-select" [(ngModel)]="selectedMinRating">
+        <option value="0">All Ratings</option>
+        <option value="4">4.0+</option>
+        <option value="4.5">4.5+</option>
+        <option value="4.7">4.7+</option>
+      </select>
+    </div>
   </div>
 
-  <div *ngIf="filteredHotels.length === 0" class="empty-state">
-    <p>No hotels found for the selected location.</p>
+  <div *ngIf="loading" class="loading">
+    <p>Loading hotels...</p>
   </div>
 
-  <div class="hotels-grid">
+  <div *ngIf="!loading && filteredHotels.length === 0" class="empty-state">
+    <p>🏨 No hotels found matching your filters.</p>
+  </div>
+
+  <div class="hotels-grid" *ngIf="!loading">
     <div *ngFor="let hotel of filteredHotels"
          class="hotel-card"
-         [ngClass]="{ 'unavailable': !hotel.available }">
+         [appHighlightBooked]="!hotel.available"
+         [appHighlightDiscount]="hotel.discount">
       
       <div class="hotel-header">
         <h3>{{ hotel.name }}</h3>
         <span class="badge" [ngClass]="{ 'available': hotel.available, 'unavailable-badge': !hotel.available }">
-          {{ hotel.available ? 'Available' : 'Unavailable' }}
+          {{ hotel.available ? 'Available' : 'Booked' }}
         </span>
       </div>
 
       <div class="hotel-details">
         <p class="location">📍 {{ hotel.location }}</p>
-        <p class="rating">⭐ {{ hotel.rating }} / 5</p>
+        <p class="rating">⭐ {{ hotel.rating | number: '1.1-1' }} / 5</p>
+        <p class="description">{{ hotel.description }}</p>
       </div>
 
-      <p class="price">₹{{ hotel.price }} <span class="per-night">/ night</span></p>
-
-      <button
-        class="btn-book"
-        [disabled]="!hotel.available"
-        [routerLink]="['/book']">
-        {{ hotel.available ? 'Book Now' : 'Not Available' }}
-      </button>
+      <div class="price-section">
+        <p class="price">{{ hotel.pricePerNight | currency: 'INR': '₹': '1.0-0' }}<span class="per-night"> / night</span></p>
+        <p *ngIf="hotel.discount > 0" class="discount-text">Save {{ hotel.discount }}%!</p>
+      </div>
     </div>
   </div>
 </div>
